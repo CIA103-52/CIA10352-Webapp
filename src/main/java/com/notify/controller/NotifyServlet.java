@@ -110,10 +110,23 @@ public class NotifyServlet extends HttpServlet {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 		Integer notify_no = Integer.valueOf(req.getParameter("notify_no").trim());
 			
-		String notify_content = req.getParameter("notify_content").trim();
-				if (notify_content == null || notify_content.trim().length() == 0) {
-					errorMsgs.add("通知內容請勿空白");
-				}	
+	
+				String str = req.getParameter("mem_id");
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("請輸入會員編號");
+				}
+				
+				Integer mem_id = 0; //?????????????????????????????
+				try {
+					mem_id = Integer.valueOf(str);
+				} catch (Exception e) {
+					errorMsgs.add("會員編號格式不正確，請輸入數字");
+				}
+			
+			String notify_content = req.getParameter("notify_content").trim();
+					if (notify_content == null || notify_content.trim().length() == 0) {
+						errorMsgs.add("通知內容請勿空白");
+					}
 				
 //				java.sql.Date hiredate = null;
 //				try {
@@ -123,7 +136,7 @@ public class NotifyServlet extends HttpServlet {
 //					errorMsgs.add("請輸入日期!");
 //				}
 
-		Integer mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
+//		Integer mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
 //		String managerstatusReg = "^[0-1]$";
 				NotifyVO notifyVO = new NotifyVO();
 				notifyVO.setNotify_no(notify_no);
